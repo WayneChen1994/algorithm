@@ -1,20 +1,3 @@
-# 寻找最大排列问题的递归算法思路的朴素实现方案（平方时间）
-def navie_max_perm(M, A=None):
-    if A is None:
-        A = set(range(len(M)))
-
-    if len(A) == 1: return A
-
-    B = set(M[i] for i in A)
-
-    C = A - B
-    if C:
-        A.remove(C.pop())
-        navie_max_perm(M, A)
-
-    return A
-
-
 # 引用计数（线性时间）解决最大排列问题
 def max_perm(M):
     n = len(M)
@@ -36,22 +19,6 @@ def max_perm(M):
             Q.append(j)
 
     return A
-
-
-# 朴素版明星问题的解决方案
-def navie_find_star(G):
-    n = len(G)
-    for u in range(n):
-        for v in range(n):
-            if u == v:
-                continue
-            if G[u][v]:
-                break
-            if not G[v][u]:
-                break
-        else:
-            return u
-    return None
 
 
 # 明星问题的解决方案
@@ -81,3 +48,78 @@ def find_star(G):
 
     return None
 
+
+# 递归版的深度优先搜索
+def rec_dfs(G, s, S=None):
+    if S is None: S = set()
+    S.add(s)
+
+    for u in G[s]:
+        if u in S: continue
+        rec_dfs(G, u, S)
+
+
+# 迭代版的深度优先搜索
+def iter_dfs(G, s):
+    S, Q = set(), []
+    Q.append(s)
+
+    while Q:
+        u = Q.pop()
+        if u in S: continue
+        S.add(u)
+        Q.extend(G[u])
+        yield u
+
+
+# 通用性的图遍历函数
+def traverse(G, s, qtype=set):
+    S, Q = set(), qtype()
+    Q.add(s)
+
+    while Q:
+        u = Q.pop()
+        if u in S: continue
+        S.add(u)
+
+        for v in G[u]:
+            Q.add(v)
+
+        yield u
+
+
+# 带时间戳的深度优先搜索
+def dfs(G, s, d, f, S=None, t=0):
+    if S is None: S = set()
+
+    d[s] = t; t += 1
+
+    S.add(s)
+
+    for u in G[s]:
+        if u in S: continue
+        t = dfs(G, u, d, f, S, t)
+
+    f[s] = t; t += 1
+
+    return t
+
+
+# 基于深度优先搜索的拓扑排序
+def top_sort(G):
+    S, res = set(), []
+
+    def recurse(u):
+        if u in S: return
+        S.add(u)
+
+        for v in G[u]:
+            recurse(v)
+
+        res.append(u)
+
+    for u in G:
+        recurse(u)
+
+    res.reverse()
+    return res

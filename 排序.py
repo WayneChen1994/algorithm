@@ -34,11 +34,22 @@ def merge_sort(seq):
 
 
 # 快速排序
+import random
+
+
 def quick_sort(seq):
-    pass
+    if len(seq) < 2: return seq
+
+    pivot = seq[random.randrange(len(seq)-1)]
+    seq.remove(pivot)
+
+    left = [x for x in seq if x <= pivot]
+    right = [y for y in seq if y > pivot]
+
+    return quick_sort(left) + [pivot] + quick_sort(right)
 
 
-#插入排序
+# 插入排序
 def insert_sort(seq):
     for i in range(len(seq)):
         j = i
