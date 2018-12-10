@@ -69,33 +69,33 @@ def select_sort(seq):
 
 
 # 计数排序
-def count_sort1(A, key=lambda x: x):
-    B, C = [], {}
+def count_sort1(seq, key=lambda x: x):
+    res, temp = [], {}
 
-    for x in A:
-        C[key(x)] = x
+    for x in seq:
+        temp[key(x)] = x
 
-    for k in range(min(C), max(C)+1):
-        c = C.get(k)
-        if c is not None:
-            B.append(c)
+    for k in range(min(temp), max(temp)+1):
+        t = temp.get(k)
+        if t is not None:
+            res.append(t)
 
-    return B
+    return res
 
 
 from collections import defaultdict
 
 
-def count_sort2(A, key=lambda x: x):
-    B, C = [], defaultdict(list)
+def count_sort2(seq, key=lambda x: x):
+    res, temp = [], defaultdict(list)
 
-    for x in A:
-        C[key(x)].append(x)
+    for x in seq:
+        temp[key(x)].append(x)
 
-    for k in range(min(C), max(C)+1):
-        B.extend(C[k])
+    for k in range(min(temp), max(temp)+1):
+        res.extend(temp[k])
 
-    return B
+    return res
 
 
 # 有向无环图的拓扑排序
@@ -120,7 +120,7 @@ def top_sort(G):
     return S
 
 
-# 分桶排序
+# 桶排序
 def bucket_sort(seq):
     buckets = [0]*(max(seq)+1)
 
