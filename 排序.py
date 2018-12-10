@@ -69,24 +69,10 @@ def select_sort(seq):
 
 
 # 计数排序
-def count_sort1(seq, key=lambda x: x):
-    res, temp = [], {}
-
-    for x in seq:
-        temp[key(x)] = x
-
-    for k in range(min(temp), max(temp)+1):
-        t = temp.get(k)
-        if t is not None:
-            res.append(t)
-
-    return res
-
-
 from collections import defaultdict
 
 
-def count_sort2(seq, key=lambda x: x):
+def count_sort(seq, key=lambda x: x):
     res, temp = [], defaultdict(list)
 
     for x in seq:
@@ -139,8 +125,7 @@ def bucket_sort(seq):
 
 # 基数排序
 def radix_sort(seq):
-    _max = max(seq)
-    digit = len(str(_max))
+    digit = len(str(max(seq)))
 
     for i in range(digit):
         buckets = [[] for j in range(10)]
