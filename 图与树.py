@@ -143,7 +143,7 @@ def iddfs(G, s):
         for u in G[s]:
             if u in S: continue
 
-            for v in recurse(G, u, d-1, S)
+            for v in recurse(G, u, d-1, S):
                 yield v
 
     n = len(G)

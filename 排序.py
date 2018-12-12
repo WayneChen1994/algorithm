@@ -78,32 +78,10 @@ def count_sort(seq, key=lambda x: x):
     for x in seq:
         temp[key(x)].append(x)
 
-    for k in range(min(temp), max(temp)+1):
-        res.extend(temp[k])
+    for y in range(min(temp), max(temp)+1):
+        res.extend(temp[y])
 
     return res
-
-
-# 有向无环图的拓扑排序
-def top_sort(G):
-    in_degree = dict((u, 0) for u in G)
-
-    for u in G:
-        for v in G[u]:
-            in_degree[v] += 1
-
-    Q = [u for u in G if in_degree[u] == 0]
-    S = []
-
-    while Q:
-        u = Q.pop()
-        S.append(u)
-        for v in G[u]:
-            in_degree[v] -= 1
-            if in_degree[v] == 0:
-                Q.append(v)
-
-    return S
 
 
 # 桶排序
@@ -136,3 +114,25 @@ def radix_sort(seq):
         seq = [a for b in buckets for a in b]
 
     return seq
+
+
+# 有向无环图的拓扑排序
+def top_sort(G):
+    in_degree = dict((u, 0) for u in G)
+
+    for u in G:
+        for v in G[u]:
+            in_degree[v] += 1
+
+    Q = [u for u in G if in_degree[u] == 0]
+    S = []
+
+    while Q:
+        u = Q.pop()
+        S.append(u)
+        for v in G[u]:
+            in_degree[v] -= 1
+            if in_degree[v] == 0:
+                Q.append(v)
+
+    return S

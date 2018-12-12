@@ -1,9 +1,9 @@
 from random import randrange
 
 
-lis = [randrange(100) for i in range(10)]
-
+lis = [randrange(100) for x in range(10)]
 print(lis)
+print('-' * 40)
 
 
 def buddle_sort(seq):
@@ -11,9 +11,6 @@ def buddle_sort(seq):
         for j in range(len(seq)-1-i):
             if seq[j] > seq[j+1]:
                 seq[j], seq[j+1] = seq[j+1], seq[j]
-
-# buddle_sort(lis)
-# print(lis)
 
 
 def gnome_sort(seq):
@@ -25,9 +22,6 @@ def gnome_sort(seq):
             seq[i-1], seq[i] = seq[i], seq[i-1]
             i -= 1
 
-# gnome_sort(lis)
-# print(lis)
-
 
 def insert_sort(seq):
     for i in range(len(seq)):
@@ -35,9 +29,6 @@ def insert_sort(seq):
         while j > 0 and seq[j-1] > seq[j]:
             seq[j-1], seq[j] = seq[j], seq[j-1]
             j -= 1
-
-# insert_sort(lis)
-# print(lis)
 
 
 def select_sort(seq):
@@ -49,28 +40,9 @@ def select_sort(seq):
         seq[i], seq[max_j] = seq[max_j], seq[i]
 
 
-# select_sort(lis)
-# print(lis)
-
-
-def quick_sort(seq):
-    if len(seq) < 2: return seq
-
-    pivot = seq[randrange(len(seq)-1)]
-
-    seq.remove(pivot)
-
-    left = [x for x in seq if x <= pivot]
-    right = [y for y in seq if y > pivot]
-
-    return quick_sort(left) + [pivot] + quick_sort(right)
-
-
-# print(quick_sort(lis))
-
-
 def merge_sort(seq):
     mid = len(seq) // 2
+
     left, right = seq[:mid], seq[mid:]
 
     if len(left) > 1: left = merge_sort(left)
@@ -89,7 +61,17 @@ def merge_sort(seq):
     return (left or right) + res
 
 
-# print(merge_sort(lis))
+def quick_sort(seq):
+    if len(seq) < 2: return seq
+
+    pivot = seq[randrange(len(seq)-1)]
+
+    seq.remove(pivot)
+
+    left = [x for x in seq if x <= pivot]
+    right = [y for y in seq if y > pivot]
+
+    return quick_sort(left) + [pivot] + quick_sort(right)
 
 
 from collections import defaultdict
@@ -107,9 +89,6 @@ def count_sort(seq, key=lambda x: x):
     return res
 
 
-# print(count_sort(lis))
-
-
 def bucket_sort(seq):
     buckets = [0] * (max(seq)+1)
     res = []
@@ -121,10 +100,8 @@ def bucket_sort(seq):
         if buckets[j] != 0:
             for k in range(buckets[j]):
                 res.append(j)
+
     return res
-
-
-# print(bucket_sort(lis))
 
 
 def radix_sort(seq):
@@ -134,14 +111,11 @@ def radix_sort(seq):
         buckets = [[] for j in range(10)]
 
         for s in seq:
-            buckets[s//(10**i)%10].append(s)
+            buckets[s//10**i%10].append(s)
 
         seq = [a for b in buckets for a in b]
 
     return seq
-
-
-print(radix_sort(lis))
 
 
 def top_sort(G):
